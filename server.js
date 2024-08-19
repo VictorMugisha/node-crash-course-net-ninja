@@ -1,9 +1,12 @@
 const http = require("http")
 const fs = require("fs")
+const _ = require("lodash")
 
 const server = http.createServer((request, response) => {
-    console.log("URL: ", request.url)
-    console.log("Method: ", request.method)
+    // lodash 
+
+    const number = _.random(0, 30)
+    console.log(number)
 
     // Sending back a response to the client
     response.setHeader("Content-Type", "text/html")
