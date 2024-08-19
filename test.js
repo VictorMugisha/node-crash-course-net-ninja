@@ -16,3 +16,21 @@ const fs = require("fs")
 // fs.writeFile("./docs/text2.txt", "Hello World!", () => {
 //     console.log("File was written")
 // })
+
+
+// Creating and Deleting folders
+if (!fs.existsSync("./assets")) {
+    fs.mkdir("./assets", (err) => {
+        if (err) {
+            console.log(err)
+        }
+        console.log("Folder created")
+    })
+} else {
+    fs.rmdir("./assets", (err) => {
+        if (err) {
+            console.log(err)
+        }
+        console.log("Folder deleted")
+    })
+}
