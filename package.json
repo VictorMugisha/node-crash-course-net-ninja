@@ -2,6 +2,7 @@
   "dependencies": {
     "@types/lodash": "^4.17.7",
     "@types/node": "^22.4.1",
+    "express": "^4.19.2",
     "lodash": "^4.17.21"
   }
 }
