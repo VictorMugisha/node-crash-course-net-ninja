@@ -34,3 +34,14 @@ if (!fs.existsSync("./assets")) {
         console.log("Folder deleted")
     })
 }
+
+
+// Deleting Files in Node
+if (fs.existsSync("./docs/deleteme.txt")) {
+    fs.unlink("./docs/deleteme.txt", (err) => {
+        if (err) {
+            console.log(err)
+        }
+        console.log("File deleted successfuly")
+    })
+}
