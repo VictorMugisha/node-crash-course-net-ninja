@@ -7,18 +7,21 @@ const server = http.createServer((request, response) => {
 
     // Sending back a response to the client
     response.setHeader("Content-Type", "text/html")
-    
+
     let path = "./views/"
 
-    switch(request.url) {
+    switch (request.url) {
         case "/":
             path += "index.html"
+            response.statusCode = 200
             break
         case "/about":
             path += "about.html"
+            response.statusCode = 200
             break
         default:
             path += "404.html"
+            response.statusCode = 404
             break
     }
 
