@@ -1,5 +1,6 @@
 const express = require("express")
 const mongoose = require("mongoose")
+const Blog = require("./models/blog")
 
 
 // Express App
@@ -13,6 +14,19 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch((error) => console.log(error))
 
 app.set("view engine", "ejs")
+
+// mongoose and mongo sandbox routes
+app.get("/add-blog", (req, res) => {
+    const blog = new Blog({
+        title: "New Blog Title Goes Here!",
+        snippet: "This is about my new blog",
+        body: "This is the blog body, expect content here!!!"
+    })
+
+    blog.save()
+        .then(result => res.send(result))
+        .catch(console.log)
+})
 
 app.get("/", (req, res) => {
     const blogs = [
