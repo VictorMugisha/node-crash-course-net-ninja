@@ -98,7 +98,7 @@ app.get("/about", (req, res) => {
 })
 
 // Blog Routes
-app.use(blogRoutes)
+app.use("/blogs", blogRoutes)
 
 // 404 redirects
 app.use((req, res) => {
