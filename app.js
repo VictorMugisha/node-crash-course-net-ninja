@@ -137,7 +137,16 @@ app.get('/blogs/:id', (req, res) => {
         });
 });
 
-
+app.delete('/blogs/:id', (req, res) => {
+    const id = req.params.id;
+    Blog.findByIdAndDelete(id)
+        .then(result => {
+            res.json()
+        })
+        .catch(err => {
+            console.log(err);
+        });
+})
 
 // 404 redirects
 app.use((req, res) => {
