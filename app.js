@@ -34,6 +34,12 @@ app.get("/all-blogs", (req, res) => {
         .catch(console.log)
 })
 
+app.get("/single-blog", (req, res) => {
+    Blog.findById('66c43e9c03afa9003ae5163b')
+        .then(result => res.send(result))
+        .catch(console.log)
+})
+
 
 
 app.get("/", (req, res) => {
