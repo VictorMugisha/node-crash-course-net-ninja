@@ -22,16 +22,7 @@ router.post('/', (req, res) => {
         });
 });
 
-router.get('/:id', (req, res) => {
-    const id = req.params.id;
-    Blog.findById(id)
-        .then(result => {
-            res.render('details', { blog: result, title: 'Blog Details' });
-        })
-        .catch(err => {
-            console.log(err);
-        });
-});
+router.get('/:id', blogController.blog_details);
 
 router.delete('/:id', (req, res) => {
     const id = req.params.id;
