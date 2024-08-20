@@ -9,13 +9,10 @@ const app = express()
 const dbURI = "mongodb+srv://victor:test1234@nodenetninja.hd6g2.mongodb.net/?retryWrites=true&w=majority&appName=NodeNetNinja"
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then((result) => console.log("Connected to the db"))
+    .then((result) => app.listen(3000))
     .catch((error) => console.log(error))
 
 app.set("view engine", "ejs")
-
-// Listen for requests
-app.listen(3000)
 
 app.get("/", (req, res) => {
     const blogs = [
