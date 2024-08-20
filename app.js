@@ -15,6 +15,10 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.set("view engine", "ejs")
 
+
+// Middlewars and static pages
+app.use(express.urlencoded({ extended: true }))
+
 // Basic Routes
 app.get("/", (req, res) => {
     const blogs = [
@@ -89,9 +93,19 @@ app.get("/about", (req, res) => {
 
 // Blog Routes
 app.get("/blogs", (req, res) => {
-    Blog.find()
+    Blog.find().sort({ createdAt: -1 })
         .then(result => {
             res.render("index", { title: "All Blogs", blogs: result })
+        })
+        .catch(console.log)
+})
+
+app.post("/blogs", (req, res) => {
+    // console.log(req.body)
+    const blog = new Blog(req.body)
+    blog.save()
+        .then(result => {
+            res.redirect("/")
         })
         .catch(console.log)
 })
