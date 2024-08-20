@@ -28,6 +28,14 @@ app.get("/add-blog", (req, res) => {
         .catch(console.log)
 })
 
+app.get("/all-blogs", (req, res) => {
+    Blog.find()
+        .then(result => res.send(result))
+        .catch(console.log)
+})
+
+
+
 app.get("/", (req, res) => {
     const blogs = [
         {
