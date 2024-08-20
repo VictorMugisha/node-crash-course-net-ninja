@@ -1,7 +1,17 @@
 const express = require("express")
+const mongoose = require("mongoose")
+
 
 // Express App
 const app = express()
+
+// mongoDB connection string
+const dbURI = "mongodb+srv://victor:test1234@nodenetninja.hd6g2.mongodb.net/?retryWrites=true&w=majority&appName=NodeNetNinja"
+
+mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
+    .then((result) => console.log("Connected to the db"))
+    .catch((error) => console.log(error))
+
 app.set("view engine", "ejs")
 
 // Listen for requests
