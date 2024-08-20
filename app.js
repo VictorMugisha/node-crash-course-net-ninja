@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const Blog = require("./models/blog")
+const morgan = require("morgan")
 
 
 // Express App
@@ -16,8 +17,14 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 app.set("view engine", "ejs")
 
 
-// Middlewars and static pages
-app.use(express.urlencoded({ extended: true }))
+// Middleware & static files
+app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use((req, res, next) => {
+    res.locals.path = req.path;
+    next();
+});
 
 // Basic Routes
 app.get("/", (req, res) => {
@@ -92,36 +99,44 @@ app.get("/about", (req, res) => {
 
 
 // Blog Routes
-app.get("/blogs", (req, res) => {
+app.get('/blogs/create', (req, res) => {
+    res.render('create', { title: 'Create a new blog' });
+});
+
+app.get('/blogs', (req, res) => {
     Blog.find().sort({ createdAt: -1 })
         .then(result => {
-            res.render("index", { title: "All Blogs", blogs: result })
+            res.render('index', { blogs: result, title: 'All blogs' });
         })
-        .catch(console.log)
-})
+        .catch(err => {
+            console.log(err);
+        });
+});
 
-app.post("/blogs", (req, res) => {
-    // console.log(req.body)
-    const blog = new Blog(req.body)
+app.post('/blogs', (req, res) => {
+    // console.log(req.body);
+    const blog = new Blog(req.body);
+
     blog.save()
         .then(result => {
-            res.redirect("/")
+            res.redirect('/blogs');
         })
-        .catch(console.log)
-})
+        .catch(err => {
+            console.log(err);
+        });
+});
 
-app.get("/blogs/:id", (req, res) => {
-    const id = req.params.id
+app.get('/blogs/:id', (req, res) => {
+    const id = req.params.id;
     Blog.findById(id)
         .then(result => {
-            res.render("detail", { title: "Blog Details", blog: result })
+            res.render('details', { blog: result, title: 'Blog Details' });
         })
-        .catch(console.log)
-})
+        .catch(err => {
+            console.log(err);
+        });
+});
 
-app.get("/blogs/create", (req, res) => {
-    res.render("create", { title: "Create a new blog" })
-})
 
 
 // 404 redirects
