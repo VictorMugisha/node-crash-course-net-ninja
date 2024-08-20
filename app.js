@@ -15,33 +15,7 @@ mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.set("view engine", "ejs")
 
-// mongoose and mongo sandbox routes
-app.get("/add-blog", (req, res) => {
-    const blog = new Blog({
-        title: "New Blog Title Goes Here!",
-        snippet: "This is about my new blog",
-        body: "This is the blog body, expect content here!!!"
-    })
-
-    blog.save()
-        .then(result => res.send(result))
-        .catch(console.log)
-})
-
-app.get("/all-blogs", (req, res) => {
-    Blog.find()
-        .then(result => res.send(result))
-        .catch(console.log)
-})
-
-app.get("/single-blog", (req, res) => {
-    Blog.findById('66c43e9c03afa9003ae5163b')
-        .then(result => res.send(result))
-        .catch(console.log)
-})
-
-
-
+// Basic Routes
 app.get("/", (req, res) => {
     const blogs = [
         {
@@ -105,16 +79,27 @@ app.get("/", (req, res) => {
             snippet: "Intro to MongoDB and basic operations."
         }
     ];
-    res.render("index", { title: "Home", blogs })
+    res.redirect("/blogs")
 })
 
 app.get("/about", (req, res) => {
     res.render("about", { title: "About" })
 })
 
+
+// Blog Routes
+app.get("/blogs", (req, res) => {
+    Blog.find()
+        .then(result => {
+            res.render("index", { title: "All Blogs", blogs: result })
+        })
+        .catch(console.log)
+})
+
 app.get("/blogs/create", (req, res) => {
     res.render("create", { title: "Create a new blog" })
 })
+
 
 // 404 redirects
 app.use((req, res) => {
