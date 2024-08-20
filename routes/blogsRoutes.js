@@ -3,9 +3,7 @@ const blogController = require("../controllers/blogController")
 
 const router = express.Router()
 
-router.get('/create', (req, res) => {
-    res.render('create', { title: 'Create a new blog' });
-});
+router.get('/create', blogController.blog_create_get);
 
 router.get('/', blogController.blog_index);
 
